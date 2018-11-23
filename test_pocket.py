@@ -8,6 +8,7 @@ class PocketTest(unittest.TestCase):
     def setUp(self):
         self.consumer_key = 'consumer_key'
         self.access_token = 'access_token'
+        self.username = 'username'
 
     def tearDown(self):
         pass
@@ -16,16 +17,13 @@ class PocketTest(unittest.TestCase):
         pocket_instance = pocket.Pocket(
             self.consumer_key,
             self.access_token,
+            self.username,
         )
 
         self.assertEqual(self.consumer_key, pocket_instance.consumer_key)
         self.assertEqual(self.access_token, pocket_instance.access_token)
+        self.assertEqual(self.username, pocket_instance.username)
 
-    def test_pocket_init_payload(self):
-        pocket_instance = pocket.Pocket(
-            self.consumer_key,
-            self.access_token,
-        )
         expected_payload = {
             'consumer_key': self.consumer_key,
             'access_token': self.access_token,

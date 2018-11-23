@@ -117,9 +117,10 @@ class Pocket(object):
 
     timeout = 60
 
-    def __init__(self, consumer_key, access_token):
+    def __init__(self, consumer_key, access_token, username):
         self.consumer_key = consumer_key
         self.access_token = access_token
+        self.username = username
         self._bulk_query = []
 
         self._payload = {
