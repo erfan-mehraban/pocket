@@ -127,6 +127,15 @@ class Pocket(object):
             'consumer_key': self.consumer_key,
             'access_token': self.access_token,
         }
+    
+    @classmethod
+    def authenticate(cls, consumer_key, request_token):
+        '''
+        athenticate and inital Pocket with those data.
+        
+        '''
+        data = cls.get_credentials(consumer_key, request_token)
+        return cls(consumer_key, data["access_token"], data["username"])
 
     def get_payload(self):
         return self._payload
@@ -324,7 +333,7 @@ class Pocket(object):
     @classmethod
     def get_credentials(cls, consumer_key, code):
         '''
-        Fetches access token from using the request token and consumer key
+        Fetches authorized data with request token and consumer key
 
         '''
         headers = {
@@ -347,23 +356,3 @@ class Pocket(object):
         auth_url = ('https://getpocket.com/auth/authorize'
                     '?request_token=%s&redirect_uri=%s' % (code, redirect_uri))
         return auth_url
-
-    @classmethod
-    def auth(
-        cls, consumer_key, redirect_uri='http://example.com/', state=None,
-    ):
-        '''
-        This is a test method for verifying if oauth worked
-        http://getpocket.com/developer/docs/authentication
-
-        '''
-        code = cls.get_request_token(consumer_key, redirect_uri, state)
-
-        auth_url = 'https://getpocket.com/auth/authorize?request_token='\
-            '%s&redirect_uri=%s' % (code, redirect_uri)
-        input(
-            'Please open %s in your browser to authorize the app and '
-            'press enter:' % auth_url
-        )
-
-        return cls.get_access_token(consumer_key, code)
